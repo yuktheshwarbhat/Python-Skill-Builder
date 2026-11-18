@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Verify tests before release
+        run: pytest -m "not hardware" -q
+
+      - name: Build snapshot archive
+        run: |
+          mkdir -p dist
+          zip -r "dist/${{ github.event.repository.name }}-${{ github.ref_name }}.zip" . \
+            -x ".git/*" ".venv/*" "dist/*" "*__pycache__/*" ".pytest_cache/*" ".ruff_cache/*"
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
+          generate_release_notes: true

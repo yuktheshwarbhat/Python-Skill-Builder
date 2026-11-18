@@ -1,0 +1,29 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install lint tools
+        run: pip install -r requirements-lint.txt
+
+      - name: Ruff
+        run: ruff check . --output-format=github
+
+      - name: Black
+        run: black --check --diff .
+
+      - name: Mypy (advisory)
+        continue-on-error: true
+        run: mypy solutions
