@@ -1,0 +1,4 @@
+# Rust/C-extension tools — no Android wheels.
+# Installed in CI and on desktop, not on Termux.
+ruff>=0.4
+mypy>=1.10

@@ -1,0 +1,32 @@
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers --import-mode=importlib"
+markers = [
+    "hardware: needs a real board (deselect with -m 'not hardware')",
+    "slow: long running test",
+]
+
+[tool.coverage.run]
+source = ["solutions"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+
+
+
+######Settings:###########
+#pythonpath = ["."] → from code.month1... import ... works. Without it, pytest puts tests/month1/week1_oop/ on sys.path instead of the repo root and every import fails.
+#--import-mode=importlib → prevents "import file mismatch" when you eventually have test_palindrome.py in two different week folders (your mirrored structure guarantees this collision).
+##################
