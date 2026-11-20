@@ -1,4 +1,4 @@
-"""Tests for Q24 - recursive factorial."""
+"""Tests for recursive factorial."""
 
 import pytest
 

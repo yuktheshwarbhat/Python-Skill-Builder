@@ -1,4 +1,4 @@
-"""Q24 - Factorial of a number using recursion."""
+"""Factorial of a number using recursion."""
 
 from __future__ import annotations
 
