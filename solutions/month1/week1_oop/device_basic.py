@@ -1,28 +1,22 @@
+"""Q31 - Simple concrete Device: name, status, turn_on()."""
+
 from __future__ import annotations
 
-from solutions.month1.week1_oop.device_basic import Device
 
-
-class SmartDevice(Device):
-    """A Device that can join a Wi-Fi network."""
+class Device:
+    """A simple on/off device under test."""
 
     def __init__(self, name: str, status: str = "OFF") -> None:
-        super().__init__(name, status)
-        self.ssid: str | None = None
+        self.name = name
+        self.status = status
 
-    @property
-    def is_connected(self) -> bool:
-        """True once the device has joined a network."""
-        return self.ssid is not None
+    def turn_on(self) -> None:
+        """Switch the device on."""
+        self.status = "ON"
 
-    def connect_wifi(self, ssid: str) -> None:
-        """Join a Wi-Fi network (mock: records the SSID)."""
-        if not ssid.strip():
-            raise ValueError("ssid must not be empty")
-        self.ssid = ssid
+    def turn_off(self) -> None:
+        """Switch the device off."""
+        self.status = "OFF"
 
     def __repr__(self) -> str:
-        return (
-            f"SmartDevice(name={self.name!r}, status={self.status!r}, "
-            f"ssid={self.ssid!r})"
-        )
+        return f"Device(name={self.name!r}, status={self.status!r})"
